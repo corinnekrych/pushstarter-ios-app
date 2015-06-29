@@ -67,8 +67,12 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     [FH pushRegister:deviceToken andSuccess:^(FHResponse *success) {
+        NSNotification *notification = [NSNotification notificationWithName:@"success_registered" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
         NSLog(@"Unified Push registration successful");
     } andFailure:^(FHResponse *failed) {
+        NSNotification *notification = [NSNotification notificationWithName:@"error_register" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
         NSLog(@"Unified Push registration Error: %@", failed.error);
     }];
 }
